@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uptime-monitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uptime-monitor
+  template:
+    metadata:
+      labels:
+        app: uptime-monitor
+    spec:
+      containers:
+        - name: uptime-monitor
+          image: angel1272/uptime-monitor:1.0
+          ports:
+            - containerPort: 5000
