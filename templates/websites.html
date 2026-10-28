@@ -1,0 +1,45 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h1>Website Status</h1>
+<p>View saved websites and manually check their availability.</p>
+
+<div class="table-wrap">
+<table>
+    <tr>
+        <th>Name</th>
+        <th>URL</th>
+        <th>Status</th>
+        <th>HTTP Code</th>
+        <th>Response Time</th>
+        <th>Actions</th>
+    </tr>
+    {% for site in websites %}
+    <tr>
+        <td>{{ site.name }}</td>
+        <td>{{ site.url }}</td>
+        <td class="{{ site.status }}">{{ site.status }}</td>
+        <td>{{ site.status_code or "N/A" }}</td>
+        <td>
+            {% if site.response_time is not none %}
+                {{ site.response_time }} ms
+            {% else %}N/A{% endif %}
+        </td>
+        <td>
+            <form method="POST" action="/check/{{ site.id }}">
+                <button type="submit">Check</button>
+            </form>
+            <form method="POST" action="/delete/{{ site.id }}"
+                  onsubmit="return confirm('Remove this website?')">
+                <button type="submit" class="danger">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6">No websites added yet.</td></tr>
+    {% endfor %}
+</table>
+</div>
+
+<p><a class="button" href="/add">Add Website</a></p>
+{% endblock %}

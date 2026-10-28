@@ -1,0 +1,48 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h1>Website Uptime Monitoring System</h1>
+<p>Monitor website availability and response times.</p>
+
+<div class="cards">
+    <div class="card">
+        <p>Total Websites</p>
+        <h2>{{ total }}</h2>
+    </div>
+    <div class="card">
+        <p>Websites UP</p>
+        <h2 class="UP">{{ up_count }}</h2>
+    </div>
+    <div class="card">
+        <p>Websites DOWN</p>
+        <h2 class="DOWN">{{ down_count }}</h2>
+    </div>
+</div>
+
+<h2>Monitored Websites</h2>
+<div class="table-wrap">
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Response Time</th>
+    </tr>
+    {% for site in websites %}
+    <tr>
+        <td>{{ site.name }}</td>
+        <td class="{{ site.status }}">{{ site.status }}</td>
+        <td>
+            {% if site.response_time is not none %}
+                {{ site.response_time }} ms
+            {% else %}Not checked{% endif %}
+        </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="3">No websites added yet.</td></tr>
+    {% endfor %}
+</table>
+</div>
+
+<p><a class="button" href="/add">Add a Website</a></p>
+<p><a class="button" href="/check">Check All Websites</a></p>
+{% endblock %}

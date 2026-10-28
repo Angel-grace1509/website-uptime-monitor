@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h1>Monitoring History</h1>
+<p>The latest 100 website checks are shown below. Times are in UTC.</p>
+
+<div class="table-wrap">
+<table>
+    <tr>
+        <th>Website</th>
+        <th>Status</th>
+        <th>HTTP Code</th>
+        <th>Response Time</th>
+        <th>Checked At</th>
+    </tr>
+    {% for item in history %}
+    <tr>
+        <td>{{ item.name }}</td>
+        <td class="{{ item.status }}">{{ item.status }}</td>
+        <td>{{ item.status_code or "N/A" }}</td>
+        <td>
+            {% if item.response_time is not none %}
+                {{ item.response_time }} ms
+            {% else %}N/A{% endif %}
+        </td>
+        <td>{{ item.checked_at }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5">No checks recorded yet.</td></tr>
+    {% endfor %}
+</table>
+</div>
+{% endblock %}
