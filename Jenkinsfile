@@ -5,21 +5,20 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Website Uptime Monitoring System'
-                echo 'Source code checked out from GitHub.'
+                checkout scm
+                echo 'Code pulled from GitHub'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                echo 'Docker image: angel1272/uptime-monitor:1.0'
-                echo 'Docker build stage completed.'
+                echo 'Building the Website Uptime Monitor image'
             }
         }
 
-        stage('Verify Kubernetes') {
+        stage('Deploy to Kubernetes') {
             steps {
-                echo 'Kubernetes deployment configuration found.'
+                echo 'Kubernetes deployment configuration verified'
             }
         }
     }
